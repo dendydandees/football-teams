@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Dendy Dharmawan PWA" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#212121" />
+    <link rel="shortcut icon" type="image/png" href="/img/icon.png" />
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/styles.css" />
+
+    <title>Champions League App</title>
+  </head>
+  <body class="grey darken-4">
+    <div class="splash white">
+      <div class="splash-content fade-in">
+        <img src="./img/icon.png" alt="" height="100" />
+        <h6>Champions League App</h6>
+      </div>
+    </div>
+
+    <!-- NavBar -->
+    <header>
+      <nav class="grey darken-4 z-depth-3" role="navigation">
+        <div class="nav-wrapper container">
+          <a href="/" class="logo yellow-text" id="logo-container"
+            >Champions<span class="white-text">App</span></a
+          >
+          <a href="#" class="right sidenav-trigger" data-target="nav-mobile">
+            <i class="material-icons">menu</i>
+          </a>
+
+          <ul class="topnav right hide-on-med-and-down"></ul>
+          <ul class="sidenav" id="nav-mobile"></ul>
+        </div>
+      </nav>
+    </header>
+    <!-- NavBar End -->
+    <div class="container" id="body-content"></div>
+
+    <!-- Materialize JS -->
+    <script type="text/javascript" src="./js/materialize.min.js"></script>
+    <script defer src="./js/main.js" type="module"></script>
+
+  </body>
+</html>

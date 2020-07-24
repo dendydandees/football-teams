@@ -1,0 +1,17 @@
+{
+  "name": "ChampionsLeagueApp",
+  "short_name": "ChampionsApp",
+  "description": "Dendy Dharmawan PWA",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#212121",
+  "theme_color": "#212121",
+  "icons": [
+    {
+      "src": "./img/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "gcm_sender_id": "164512943645"
+}
