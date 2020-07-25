@@ -1,13 +1,16 @@
 // Register service worker
-const registerServiceWorker = async () => {
-  try {
-    const registration = await navigator.serviceWorker
-      .register('/service-worker.js')
-    console.log('Registrasi service worker berhasil.')
-    return registration
-  }
-  catch (err) {
-    console.error('Registrasi service worker gagal.', err)
+const registerServiceWorker = () => {
+  // Check that service workers are supported
+  if ('serviceWorker' in navigator) {
+    // Use the window load event to keep the page load performant
+    window.addEventListener('load', () => {
+      navigator.serviceWorker
+        .register('/service-worker.js')
+        .then(() => console.log('Register Berhasil'))
+        .catch(() => console.log('Register Tidak Berhasil'))
+    })
+  } else {
+    console.log('Service Worker it is not supported!')
   }
 }
 
@@ -36,7 +39,7 @@ const registerNotification = () => {
       }
 
       if (('PushManager' in window)) {
-        navigator.serviceWorker.getRegistration().then(function(registration) {
+        navigator.serviceWorker.getRegistration().then((registration) => {
           registration.pushManager
             .subscribe({
               userVisibleOnly: true,

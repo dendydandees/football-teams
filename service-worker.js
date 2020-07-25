@@ -1,74 +1,103 @@
-const CACHE_NAME = 'football-app v1'
-let cacheUrl = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/components/navigation.html',
-  '/pages/standings.html',
-  '/pages/teams.html',
-  '/pages/favoriteteams.html',
-  '/js/materialize.min.js',
-  '/js/api.js',
-  '/js/app.js',
-  '/js/db.js',
-  '/js/listener.js',
-  '/js/main.js',
-  '/js/navigation.js',
-  '/js/page.js',
-  '/js/splash.js',
-  '/js/idb.js',
-  '/js/push.js',
-  '/js/pwa.js',
-  '/css/styles.css',
-  '/css/materialize.min.css',
-  '/img/icon.png',
-  'https://fonts.googleapis.com/icon?family=Material+Icons',
-]
+importScripts(
+  'https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js'
+)
 
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(cacheUrl)
+workbox.setConfig({ debug: false })
+
+const { precacheAndRoute } = workbox.precaching
+const { registerRoute } = workbox.routing
+const { StaleWhileRevalidate, CacheFirst } = workbox.strategies
+const { CacheableResponsePlugin } = workbox.cacheableResponse
+const { ExpirationPlugin } = workbox.expiration
+
+if (workbox) {
+  console.log(`Yay! Workbox is loaded 🎉`)
+
+  precacheAndRoute([
+    { url: '/', revision: '1' },
+    { url: '/index.html', revision: '1' },
+    { url: '/manifest.json', revision: '1' },
+    { url: '/components/navigation.html', revision: '1' },
+    { url: '/pages/standings.html', revision: '1' },
+    { url: '/pages/teams.html', revision: '1' },
+    { url: '/pages/favoriteteams.html', revision: '1' },
+    { url: '/js/materialize.min.js', revision: '1' },
+    { url: '/js/api.js', revision: '1' },
+    { url: '/js/app.js', revision: '1' },
+    { url: '/js/db.js', revision: '1' },
+    { url: '/js/listener.js', revision: '1' },
+    { url: '/js/main.js', revision: '1' },
+    { url: '/js/navigation.js', revision: '1' },
+    { url: '/js/page.js', revision: '1' },
+    { url: '/js/splash.js', revision: '1' },
+    { url: '/js/idb.js', revision: '1' },
+    { url: '/js/push.js', revision: '1' },
+    { url: '/js/pwa.js', revision: '1' },
+    { url: '/css/styles.css', revision: '1' },
+    { url: '/css/materialize.min.css', revision: '1' },
+    { url: '/img/icon.png', revision: '1' },
+    {
+      url: 'https://fonts.googleapis.com/icon?family=Material+Icons',
+      revision: '1',
+    },
+  ])
+
+  // Caching Image
+  registerRoute(
+    /\.(?:png|jpg|jpeg|svg)$/,
+    new CacheFirst({
+      cacheName: 'images-resources',
+      plugins: [
+        new CacheableResponsePlugin({
+          statuses: [0, 200],
+        }),
+        new ExpirationPlugin({
+          maxEntries: 150,
+          maxAgeSeconds: 30 * 24 * 60 * 60, // 30 hari
+        }),
+      ],
     })
   )
-})
 
-self.addEventListener('activate',(event) => {
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheName != CACHE_NAME) {
-            console.log('ServiceWorker: cache ' + cacheName + ' dihapus')
-            return caches.delete(cacheName)
-          }
-        })
-      )
+  // Caching Data
+  registerRoute(
+    new RegExp('https://api.football-data.org/v2/competitions/'),
+    new StaleWhileRevalidate()
+  )
+
+  // Caching Google Font
+  registerRoute(
+    /.*(?:googleapis|gstatic)\.com/,
+    new StaleWhileRevalidate({
+      cacheName: 'google-fonts-stylesheets',
+      plugins: [
+        new CacheableResponsePlugin({
+          statuses: [0, 200],
+        }),
+        new ExpirationPlugin({
+          maxAgeSeconds: 30 * 24 * 60 * 60, // 30 hari
+        }),
+      ],
     })
   )
-})
 
-self.addEventListener('fetch', (event) => {
-  let base_url = 'https://api.football-data.org/v2/competitions/'
+  registerRoute(
+    /\.(?:js|css)$/,
+    new StaleWhileRevalidate({
+      cacheName: 'static-resources',
+    })
+  )
 
-  if (event.request.url.indexOf(base_url) > -1) {
-    event.respondWith(
-      caches.open(CACHE_NAME).then(async (cache) => {
-        const response = await fetch(event.request)
-        cache.put(event.request.url, response.clone())
-        return response
-      })
-    )
-  } else {
-    event.respondWith(
-      caches
-        .match(event.request, { ignoreSearch: true })
-        .then((response) => {
-          return response || fetch(event.request)
-        })
-    )
-  }
-})
+  registerRoute(
+    new RegExp('/pages/'),
+    new StaleWhileRevalidate({
+      cacheName: 'pages-resources',
+    })
+  )
+
+} else {
+  console.log(`Boo! Workbox didn't load 😬`)
+}
 
 self.addEventListener('push', (event) => {
   let body

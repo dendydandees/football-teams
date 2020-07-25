@@ -13,9 +13,5 @@ document.addEventListener('DOMContentLoaded', () => {
   loadPage(page)
 })
 
-if (!('serviceWorker' in navigator)) {
-  console.log('Service worker tidak didukung browser ini.')
-} else {
-  pwa.registerServiceWorker()
-  pwa.registerNotification()
-}
+pwa.registerServiceWorker()
+pwa.registerNotification()
