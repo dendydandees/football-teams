@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,6 +15,16 @@
     <link rel="stylesheet" href="/css/styles.css" />
 
     <title>Champions League App</title>
+
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/7.17.1/firebase-app.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/7.17.1/firebase-auth.js"></script>
+    <script defer src="/__/firebase/7.17.1/firebase-database.js"></script>
+    <script defer src="/__/firebase/7.17.1/firebase-messaging.js"></script>
+    <script defer src="/__/firebase/7.17.1/firebase-storage.js"></script>
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script defer src="/__/firebase/init.js"></script>
   </head>
   <body class="grey darken-4">
     <div class="splash white">
@@ -46,6 +56,5 @@
     <!-- Materialize JS -->
     <script type="text/javascript" src="./js/materialize.min.js"></script>
     <script defer src="./js/main.js" type="module"></script>
-
   </body>
 </html>
