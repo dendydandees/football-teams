@@ -1,17 +1,17 @@
 importScripts(
-  'https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js'
-)
+  'https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js',
+);
 
-workbox.setConfig({ debug: false })
+workbox.setConfig({ debug: false });
 
-const { precacheAndRoute } = workbox.precaching
-const { registerRoute } = workbox.routing
-const { StaleWhileRevalidate, CacheFirst } = workbox.strategies
-const { CacheableResponsePlugin } = workbox.cacheableResponse
-const { ExpirationPlugin } = workbox.expiration
+const { precacheAndRoute } = workbox.precaching;
+const { registerRoute } = workbox.routing;
+const { StaleWhileRevalidate, CacheFirst } = workbox.strategies;
+const { CacheableResponsePlugin } = workbox.cacheableResponse;
+const { ExpirationPlugin } = workbox.expiration;
 
 if (workbox) {
-  console.log(`Yay! Workbox is loaded 🎉`)
+  console.log(`Yay! Workbox is loaded 🎉`);
 
   precacheAndRoute([
     { url: '/', revision: '1' },
@@ -35,12 +35,63 @@ if (workbox) {
     { url: '/js/pwa.js', revision: '1' },
     { url: '/css/styles.css', revision: '1' },
     { url: '/css/materialize.min.css', revision: '1' },
-    { url: '/img/icon.png', revision: '1' },
+    {
+      url: '/img/icon/android-icon-192x192-dunplab-manifest-15526.png',
+      revision: '1',
+    },
+    {
+      url: '/img/icon/apple-icon-57x57-dunplab-manifest-15526.png',
+      revision: '1',
+    },
+    {
+      url: '/img/icon/apple-icon-60x60-dunplab-manifest-15526.png',
+      revision: '1',
+    },
+    {
+      url: '/img/icon/apple-icon-72x72-dunplab-manifest-15526.png',
+      revision: '1',
+    },
+    {
+      url: '/img/icon/apple-icon-76x76-dunplab-manifest-15526.png',
+      revision: '1',
+    },
+    {
+      url: '/img/icon/apple-icon-114x114-dunplab-manifest-15526.png',
+      revision: '1',
+    },
+    {
+      url: '/img/icon/apple-icon-120x120-dunplab-manifest-15526.png',
+      revision: '1',
+    },
+    {
+      url: '/img/icon/apple-icon-144x144-dunplab-manifest-15526.png',
+      revision: '1',
+    },
+    {
+      url: '/img/icon/apple-icon-152x152-dunplab-manifest-15526.png',
+      revision: '1',
+    },
+    {
+      url: '/img/icon/apple-icon-180x180-dunplab-manifest-15526.png',
+      revision: '1',
+    },
+    {
+      url: '/img/icon/favicon-16x16-dunplab-manifest-15526.png',
+      revision: '1',
+    },
+    {
+      url: '/img/icon/favicon-32x32-dunplab-manifest-15526.png',
+      revision: '1',
+    },
+    {
+      url: '/img/icon/favicon-96x96-dunplab-manifest-15526.png',
+      revision: '1',
+    },
     {
       url: 'https://fonts.googleapis.com/icon?family=Material+Icons',
       revision: '1',
     },
-  ])
+  ]);
 
   // Caching Image
   registerRoute(
@@ -56,14 +107,14 @@ if (workbox) {
           maxAgeSeconds: 30 * 24 * 60 * 60, // 30 hari
         }),
       ],
-    })
-  )
+    }),
+  );
 
   // Caching Data
   registerRoute(
     new RegExp('https://api.football-data.org/v2/competitions/'),
-    new StaleWhileRevalidate()
-  )
+    new StaleWhileRevalidate(),
+  );
 
   // Caching Google Font
   registerRoute(
@@ -78,47 +129,46 @@ if (workbox) {
           maxAgeSeconds: 30 * 24 * 60 * 60, // 30 hari
         }),
       ],
-    })
-  )
+    }),
+  );
 
   registerRoute(
     /\.(?:js|css)$/,
     new StaleWhileRevalidate({
       cacheName: 'static-resources',
-    })
-  )
+    }),
+  );
 
   registerRoute(
     new RegExp('/pages/'),
     new StaleWhileRevalidate({
       cacheName: 'pages-resources',
-    })
-  )
-
+    }),
+  );
 } else {
-  console.log(`Boo! Workbox didn't load 😬`)
+  console.log(`Boo! Workbox didn't load 😬`);
 }
 
 self.addEventListener('push', (event) => {
-  let body
+  let body;
   if (event.data) {
-    body = event.data.text()
+    body = event.data.text();
   } else {
-    body = 'Push message no payload'
+    body = 'Push message no payload';
   }
   var options = {
     body: body,
-    icon: 'img/icon.png',
+    icon: 'img/apple-icon-180x180-dunplab-manifest-15526.png',
     tag: 'message-group-1',
     renotify: true,
-    badge: '/img/icon.png',
+    badge: '/img/apple-icon-180x180-dunplab-manifest-15526.png',
     vibrate: [100, 50, 100],
     data: {
       dateOfArrival: Date.now(),
       primaryKey: 1,
     },
-  }
+  };
   event.waitUntil(
-    self.registration.showNotification('Push Notification', options)
-  )
-})
+    self.registration.showNotification('Push Notification', options),
+  );
+});

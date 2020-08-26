@@ -6,9 +6,9 @@ const pushNotification = (message) => {
     body: message,
     tag: 'message-group-1',
     renotify: true,
-    badge: '/img/icon.png',
-    icon: '/img/icon.png'
-  }
+    badge: '/img/apple-icon-180x180-dunplab-manifest-15526.png',
+    icon: '/img/apple-icon-180x180-dunplab-manifest-15526.png',
+  };
   if (Notification.permission === 'granted') {
     navigator.serviceWorker.ready.then((reg) => {
       reg.showNotification(title, options)
