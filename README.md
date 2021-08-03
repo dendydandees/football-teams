@@ -5,7 +5,7 @@
   Dendy Dharmawan
 </h1>
 <p align="center">
-  <a href="https://dendydharmawan.vercel.app/" target="_blank">dendydharmawan.vercel.app</a>
+  <a href="https://dendydharmawan.thedev.id/" target="_blank">dendydharmawan.thedev.id</a>
 </p>
 
 # Football App - UEFA Champions League Standings
